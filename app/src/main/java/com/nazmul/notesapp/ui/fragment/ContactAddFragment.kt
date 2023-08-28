@@ -5,13 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.nazmul.notesapp.R
 import com.nazmul.notesapp.databinding.FragmentContactAddBinding
+import com.nazmul.notesapp.model.Note
+import com.nazmul.notesapp.utils.CoroutineUtils.executeInCoroutine
+import com.nazmul.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ContactAddFragment : Fragment() {
     private lateinit var binding: FragmentContactAddBinding
+    private val noteViewModel : NoteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +36,19 @@ class ContactAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnAddNotes.setOnClickListener {
+            val title = binding.etTitle.text.toString()
+            val description = binding.etDescription.text.toString()
+            val note = Note(
+                title = title,
+                description = description
+            )
+            executeInCoroutine {
+                noteViewModel.saveTask(note)
+            }
+
+        }
     }
 
 }
