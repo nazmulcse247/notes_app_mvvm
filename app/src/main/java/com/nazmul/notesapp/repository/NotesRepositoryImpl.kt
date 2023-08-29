@@ -10,7 +10,7 @@ class NotesRepositoryImpl @Inject constructor(private val dao : NotesDao) : Note
         dao.saveTask(note)
     }
 
-    override suspend fun getAllNotes(): Flow<List<Note>> {
+    override fun getAllNotes(): Flow<List<Note>> {
         return dao.getAllNotes()
     }
 }

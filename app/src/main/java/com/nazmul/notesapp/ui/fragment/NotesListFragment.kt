@@ -50,7 +50,7 @@ class NotesListFragment : Fragment() {
                 when(it){
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
-                        Log.d("room", "list of notes: ${it.message}")
+                        Log.d("room", "list of notes: ${it.data?.size}")
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE

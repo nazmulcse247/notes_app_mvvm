@@ -1,5 +1,6 @@
 package com.nazmul.notesapp.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +20,7 @@ class NoteViewModel @Inject constructor(
 ) : ViewModel(){
 
     private val _notes = MutableLiveData<Resource<List<Note>>>()
-    val notes : MutableLiveData<Resource<List<Note>>> = _notes
+    val notes : LiveData<Resource<List<Note>>> = _notes
 
     suspend fun saveTask(note: Note) {
         viewModelScope.launch(dispatchers.main) {

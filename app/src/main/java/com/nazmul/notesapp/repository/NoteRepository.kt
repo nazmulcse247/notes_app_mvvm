@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface NoteRepository {
 
     suspend fun saveTask(note: Note)
-    suspend fun getAllNotes(): Flow<List<Note>>
+    fun getAllNotes(): Flow<List<Note>>
 }
