@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 class ContactAddFragment : Fragment() {
     private lateinit var binding: FragmentContactAddBinding
     private val noteViewModel : NoteViewModel by viewModels()
+    private var id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +42,13 @@ class ContactAddFragment : Fragment() {
             val title = binding.etTitle.text.toString()
             val description = binding.etDescription.text.toString()
             val note = Note(
+                id = id,
                 title = title,
                 description = description
             )
             executeInCoroutine {
                 noteViewModel.saveTask(note)
+                id++
             }
 
         }
