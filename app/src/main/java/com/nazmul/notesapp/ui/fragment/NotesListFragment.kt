@@ -1,15 +1,16 @@
 package com.nazmul.notesapp.ui.fragment
-
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nazmul.notesapp.R
+import com.nazmul.notesapp.adapters.NotesAdapter
 import com.nazmul.notesapp.databinding.FragmentNotesListBinding
 import com.nazmul.notesapp.utils.CoroutineUtils.executeInCoroutine
 import com.nazmul.notesapp.utils.Resource
@@ -21,6 +22,8 @@ class NotesListFragment : Fragment() {
 
     private lateinit var binding: FragmentNotesListBinding
     private val viewModel : NoteViewModel by viewModels()
+    private val notesAdapter by lazy { NotesAdapter() }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,11 +53,15 @@ class NotesListFragment : Fragment() {
                 when(it){
                     is Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
-                        Log.d("room", "list of notes: ${it.data?.size}")
                     }
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        Log.d(TAG, "list of notes: ${it.data?.size}")
+                        Log.d(TAG, "getAllNoteUIObserver"+it.data)
+                        Toast.makeText(requireContext(), "${it.data!!.size}", Toast.LENGTH_SHORT).show()
+                        notesAdapter.differ.submitList(it.data)
+                        binding.rvNote.adapter = notesAdapter
+
+
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
