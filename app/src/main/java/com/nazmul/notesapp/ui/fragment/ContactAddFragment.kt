@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.nazmul.notesapp.R
 import com.nazmul.notesapp.databinding.FragmentContactAddBinding
 import com.nazmul.notesapp.model.Note
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 class ContactAddFragment : Fragment() {
     private lateinit var binding: FragmentContactAddBinding
     private val noteViewModel : NoteViewModel by viewModels()
-    private var id = 0
+    private var id : Int ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,8 @@ class ContactAddFragment : Fragment() {
             )
             executeInCoroutine {
                 noteViewModel.saveTask(note)
-                id++
+                Toast.makeText(requireContext(), "Note Added", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
 
         }
