@@ -12,35 +12,34 @@ import androidx.navigation.fragment.findNavController
 import com.nazmul.notesapp.R
 import com.nazmul.notesapp.adapters.NotesAdapter
 import com.nazmul.notesapp.databinding.FragmentNotesListBinding
+import com.nazmul.notesapp.ui.base.BaseFragment
 import com.nazmul.notesapp.utils.CoroutineUtils.executeInCoroutine
 import com.nazmul.notesapp.utils.Resource
 import com.nazmul.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesListFragment : Fragment() {
+class NotesListFragment : BaseFragment<FragmentNotesListBinding>() {
 
-    private lateinit var binding: FragmentNotesListBinding
+    override fun viewBindingLayout(): FragmentNotesListBinding = FragmentNotesListBinding.inflate(layoutInflater)
+
     private val viewModel : NoteViewModel by viewModels()
     private val notesAdapter by lazy { NotesAdapter() }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentNotesListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun initializeView(savedInstanceState: Bundle?) {
+        showToastMessage("OnCreateview")
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showToastMessage("OnViewCreated")
 
         setOnClickListener()
         getAllNoteUIObserver()
