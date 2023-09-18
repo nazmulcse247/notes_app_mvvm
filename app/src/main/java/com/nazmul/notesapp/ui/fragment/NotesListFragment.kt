@@ -21,10 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotesListFragment : BaseFragment<FragmentNotesListBinding>() {
 
-    override fun viewBindingLayout(): FragmentNotesListBinding = FragmentNotesListBinding.inflate(layoutInflater)
 
     private val viewModel : NoteViewModel by viewModels()
     private val notesAdapter by lazy { NotesAdapter() }
+
+    override fun viewBindingLayout(): FragmentNotesListBinding = FragmentNotesListBinding.inflate(layoutInflater)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
